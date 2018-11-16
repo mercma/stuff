@@ -1186,6 +1186,10 @@ class Watcher(object):
     @util.debuglog
     def options(self, *args):
         options = []
+        for hook in self.hooks:
+            hook_name = "hooks.{0}".format(hook)
+            hook_with_module = "{0}.{1}".format(self.hooks[hook].__module__, self.hooks[hook].__name__)
+            options.append((hook_name, hook_with_module))
         for name in sorted(self.optnames):
             if (name in ['__name__', 'stdout_stream_conf', 'stderr_stream_conf']):
                 continue
